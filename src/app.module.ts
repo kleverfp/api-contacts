@@ -10,6 +10,7 @@ import { ContactsModule } from './contacts/contacts.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       playground: true,
+      autoSchemaFile: '.src/schema.gql',
     }),
     ContactsModule,
   ],
