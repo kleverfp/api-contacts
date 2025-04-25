@@ -6,6 +6,8 @@ import { Contact } from './contacts.type';
 export class ContactsResolver {
   constructor(private readonly contactsService: ContactsService) {}
 
-  @Query(() => [Contact])
-  getContacts() {}
+  @Query(() => [Contact], { name: 'contacts' })
+  getContacts() {
+    return this.contactsService.getContacts();
+  }
 }
