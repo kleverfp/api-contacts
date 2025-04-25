@@ -1,0 +1,37 @@
+services:
+  contacts-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: contacts-api
+    ports:
+      - "6000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - mongo
+      - mysql
+    restart: unless-stopped
+
+  mongo:
+    image: bitnami/mongodb:6.0
+    container_name: mongo-contacts
+    ports:
+      - "6001:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  mysql:
+    image: bitnami/mysql:8.0
+    container_name: mysql-contacts
+    ports:
+      - "6002:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: contactsdb
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mongo_data:
+  mysql_data:
