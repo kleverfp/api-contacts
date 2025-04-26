@@ -8,6 +8,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Models } from './models';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { Models } from './models';
       synchronize: true,
     }),
     ContactsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
