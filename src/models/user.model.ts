@@ -1,4 +1,10 @@
-import { Column, Model, Table } from 'sequelize-typescript';
+import {
+  Column,
+  CreatedAt,
+  Model,
+  Table,
+  UpdatedAt,
+} from 'sequelize-typescript';
 
 @Table({ tableName: 'users' })
 export class User extends Model {
@@ -13,4 +19,10 @@ export class User extends Model {
 
   @Column
   storage_type: string;
+
+  @CreatedAt
+  created_at: Date;
+
+  @UpdatedAt
+  updated_at: Date | null;
 }
