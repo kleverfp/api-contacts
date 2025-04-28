@@ -1,6 +1,6 @@
-# Nome do Projeto
+# Api Contacts
 
-Breve descrição do seu projeto NestJS. Explique o propósito principal e o que ele realiza.
+Projeto para inserir contatos em diferentes clientes.
 
 ## Pré-requisitos
 
@@ -16,7 +16,7 @@ Antes de começar, certifique-se de ter o seguinte instalado em sua máquina:
 1.  Clone o repositório:
 
     ```bash
-    git clone [https://docs.github.com/articles/referencing-and-citing-content](https://docs.github.com/articles/referencing-and-citing-content)
+    git clone [https://github.com/kleverfp/api-contacts.git](https://github.com/kleverfp/api-contacts.git)
     cd [nome do seu projeto]
     ```
 
