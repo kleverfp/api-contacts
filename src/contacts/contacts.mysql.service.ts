@@ -4,6 +4,7 @@ import { Contact } from 'src/models/contact.model';
 import { ICreteContact } from './interfaces/ICreateContact';
 import { IResponseContact } from './interfaces/IResponseContact';
 import { SequelizeHelper } from 'src/helpers/sequelize.helper';
+import PhoneMask from 'src/utils/phone-mask';
 
 @Injectable()
 export class ContactMysqlService {
@@ -13,7 +14,11 @@ export class ContactMysqlService {
   ) {}
 
   async create(data: ICreteContact[]) {
-    const contacts = await this.contactModel.bulkCreate(data as any, {
+    const formatedData = data.map((item) => ({
+      name: item.name.toUpperCase(),
+      phone: PhoneMask.formatPhoneNumber(item.phone),
+    }));
+    const contacts = await this.contactModel.bulkCreate(formatedData as any, {
       returning: true,
     });
 

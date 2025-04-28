@@ -13,7 +13,11 @@ export class ContactMongoService {
   ) {}
 
   async create(data: ICreteContact[]) {
-    const contacts = await this.contactModel.insertMany(data);
+    const formatedData = data.map((item) => ({
+      name: item.name,
+      phone: item.phone.replace(/\D/g, ''),
+    }));
+    const contacts = await this.contactModel.insertMany(formatedData);
     return contacts as IResponseContact[];
   }
 
