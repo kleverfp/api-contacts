@@ -11,7 +11,10 @@ export class AuthService {
   ) {}
 
   async login(client_key: string): Promise<string> {
-    const user = await this.userModel.findOne({ where: { client_key } });
+    const user = await this.userModel.findOne({
+      where: { client_key },
+      raw: true,
+    });
     if (!user) throw new UnauthorizedException('Invalid client_key');
 
     return this.generateToken(user);
@@ -25,6 +28,7 @@ export class AuthService {
       storage_type: user.storage_type,
     };
 
-    return this.jwtService.sign(payload);
+    const token = this.jwtService.sign(payload);
+    return token;
   }
 }

@@ -9,17 +9,22 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Models } from './models';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
+import { JwtStrategy } from './auth/jwt.strategy';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       playground: false,
-      autoSchemaFile: '.src/schema.gql',
+      autoSchemaFile: 'src/schema.gql',
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
     MongooseModule.forRoot(
-      process.env.MONGO_URI || 'mongodb://mongo:27017/contactsdb',
+      process.env.MONGO_URI || 'mongodb://localhost:6001/contactsdb',
     ),
     SequelizeModule.forRoot({
       dialect: 'mysql',

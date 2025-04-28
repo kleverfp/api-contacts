@@ -1,6 +1,6 @@
 import { INestApplicationContext } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
-import { randomUUID } from 'crypto';
+import { uuid } from 'uuidv4';
 
 export async function seedUsers(app: INestApplicationContext) {
   const userService = app.get(UserService);
@@ -8,13 +8,13 @@ export async function seedUsers(app: INestApplicationContext) {
   const users = [
     {
       name: 'Macapa',
-      client_key: randomUUID(),
+      client_key: uuid(),
       description: 'Rede de supermercados macapa',
       storage_type: 'mysql',
     },
     {
       name: 'Varejao',
-      client_key: randomUUID(),
+      client_key: uuid(),
       description: 'Rede de supermercados varejao',
       storage_type: 'mongo',
     },

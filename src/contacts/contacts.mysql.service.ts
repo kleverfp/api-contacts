@@ -17,6 +17,7 @@ export class ContactMysqlService {
   }
 
   findAll() {
+    console.log('find')
     return this.contactModel.findAll();
   }
 

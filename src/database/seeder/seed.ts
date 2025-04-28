@@ -8,9 +8,9 @@ async function bootstrap() {
   try {
     await seedUsers(app);
 
-    console.log('✅ All seeds completed!');
+    console.log('All seeds completed!');
   } catch (error) {
-    console.error('❌ Error seeding database:', error);
+    console.error('Error seeding database:', error);
   } finally {
     await app.close();
   }

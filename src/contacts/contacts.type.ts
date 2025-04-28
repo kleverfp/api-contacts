@@ -9,8 +9,5 @@ export class Contact {
   name: string;
 
   @Field()
-  email: string;
-
-  @Field()
   phone: string;
 }
