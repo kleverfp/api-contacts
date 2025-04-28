@@ -4,21 +4,23 @@ import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from 'src/guards/gql-auth.guard';
 import { ContactService } from './contacts.service';
 import { IRequestPayload } from './interfaces/IRequestPayload';
+import { IResponseContact } from './interfaces/IResponseContact';
+import { InputContact } from './input.contact.type';
 
 @Resolver()
 export class ContactsResolver {
   constructor(private readonly contactService: ContactService) {}
 
   @UseGuards(GqlAuthGuard)
-  @Mutation(() => Contact)
-  createContact(
-    @Args('name') name: string,
-    @Args('phone') phone: string,
+  @Mutation(() => [Contact])
+  createContacts(
+    @Args({ name: 'input', type: () => [InputContact] })
+    input: InputContact[],
     @Context() context: IRequestPayload,
-  ) {
-    const { storage_type } = context.req.user;
+  ): Promise<IResponseContact[]> {
+    const { storage_type } = context.req.user.toJSON();
 
-    return this.contactService.create(storage_type, name, phone);
+    return this.contactService.create(storage_type, input);
   }
 
   @UseGuards(GqlAuthGuard)

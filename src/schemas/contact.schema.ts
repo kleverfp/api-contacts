@@ -6,6 +6,9 @@ export type ContactDocument = Contact & Document;
 export class Contact {
   @Prop({ required: true })
   name: string;
+
+  @Prop({ required: true })
+  phone: string;
 }
 
 export const ContactSchema = SchemaFactory.createForClass(Contact);

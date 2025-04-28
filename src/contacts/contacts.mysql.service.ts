@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Contact } from 'src/models/contact.model';
+import { ICreteContact } from './interfaces/ICreateContact';
+import { IResponseContact } from './interfaces/IResponseContact';
+import { SequelizeHelper } from 'src/helpers/sequelize.helper';
 
 @Injectable()
 export class ContactMysqlService {
@@ -9,15 +12,15 @@ export class ContactMysqlService {
     private contactModel: typeof Contact,
   ) {}
 
-  create(name: string, phone: string) {
-    return this.contactModel.create({
-      name,
-      phone,
+  async create(data: ICreteContact[]) {
+    const contacts = await this.contactModel.bulkCreate(data as any, {
+      returning: true,
     });
+
+    return SequelizeHelper.toJSONList(contacts) as IResponseContact[];
   }
 
   findAll() {
-    console.log('find')
     return this.contactModel.findAll();
   }
 

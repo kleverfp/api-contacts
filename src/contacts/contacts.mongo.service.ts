@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Contact, ContactDocument } from 'src/schemas/contact.schema';
+import { ICreteContact } from './interfaces/ICreateContact';
+import { IResponseContact } from './interfaces/IResponseContact';
 
 @Injectable()
 export class ContactMongoService {
@@ -10,11 +12,9 @@ export class ContactMongoService {
     private contactModel: Model<ContactDocument>,
   ) {}
 
-  create(name: string, phone: string) {
-    return this.contactModel.create({
-      name,
-      phone,
-    });
+  async create(data: ICreteContact[]) {
+    const contacts = await this.contactModel.insertMany(data);
+    return contacts as IResponseContact[];
   }
 
   findAll() {

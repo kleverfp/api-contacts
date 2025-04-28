@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { ContactMysqlService } from './contacts.mysql.service';
 import { ContactMongoService } from './contacts.mongo.service';
+import { Contact } from './contacts.type';
+import { ICreteContact } from './interfaces/ICreateContact';
+import { IResponseContact } from './interfaces/IResponseContact';
 
 @Injectable()
 export class ContactService {
@@ -16,8 +19,11 @@ export class ContactService {
     return this.contactMysqlService;
   }
 
-  create(storageType: string, name: string, phone: string) {
-    return this.getService(storageType).create(name, phone);
+  create(
+    storageType: string,
+    data: ICreteContact[],
+  ): Promise<IResponseContact[]> {
+    return this.getService(storageType).create(data);
   }
 
   findAll(storageType: string) {

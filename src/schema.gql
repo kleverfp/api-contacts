@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 type Contact {
-  id: Int!
+  id: String!
   name: String!
   phone: String!
 }
@@ -18,8 +18,13 @@ type Query {
 }
 
 type Mutation {
-  createContact(name: String!, phone: String!): Contact!
+  createContacts(input: [InputContact!]!): [Contact!]!
   updateContact(id: String!, name: String, phone: String): Contact!
   deleteContact(id: String!): Boolean!
   login(x_auth_token: String!): LoginResponse!
+}
+
+input InputContact {
+  name: String!
+  phone: String!
 }
