@@ -18,8 +18,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "seed:docker": "node dist/database/seeder/seed.js",
-    "migrate:docker": "npx sequelize-cli db:migrate --config dist/config/sequelize.config.js --migrations-path dist/database/migrations"
+    "db:seed": "node dist/database/seeder/seed.js",
+    "db:migrate": "npx sequelize-cli db:migrate --config dist/config/sequelize.config.js --migrations-path dist/database/migrations"
   },
   "dependencies": {
     "@apollo/server": "^4.12.0",
