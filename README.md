@@ -16,7 +16,7 @@ Antes de começar, certifique-se de ter o seguinte instalado em sua máquina:
 1.  Clone o repositório:
 
     ```bash
-    git clone [https://github.com/kleverfp/api-contacts.git](https://github.com/kleverfp/api-contacts.git)
+    git clone https://github.com/kleverfp/api-contacts.git
     cd [nome do seu projeto]
     ```
 
