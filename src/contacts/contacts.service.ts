@@ -26,8 +26,8 @@ export class ContactService {
     return this.getService(storageType).create(data);
   }
 
-  findAll(storageType: string) {
-    return this.getService(storageType).findAll();
+  findAll(storageType: string, limit: number, offset: number) {
+    return this.getService(storageType).findAll(limit, offset);
   }
 
   findById(id: string, storageType: string) {

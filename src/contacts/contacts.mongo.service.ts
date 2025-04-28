@@ -21,20 +21,24 @@ export class ContactMongoService {
     return contacts as IResponseContact[];
   }
 
-  findAll() {
-    return this.contactModel.find();
+  async findAll(limit: number, offset: number) {
+    const contacts = await this.contactModel.find().limit(limit).skip(offset);
+    return contacts as IResponseContact[];
   }
 
   findById(id: string) {
     return this.contactModel.findOne({ _id: id });
   }
 
-  async update(id: string, updates: any) {
+  async update(id: string, updates: ICreteContact) {
     const contact = await this.findById(id);
     if (!contact) throw new Error('Contact not found');
-    Object.assign(contact, updates);
-    await contact.save();
-    return contact;
+
+    return this.contactModel.findByIdAndUpdate(
+      id,
+      { $set: updates },
+      { new: true },
+    );
   }
 
   async delete(id: string) {

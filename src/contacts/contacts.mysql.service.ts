@@ -25,25 +25,35 @@ export class ContactMysqlService {
     return SequelizeHelper.toJSONList(contacts) as IResponseContact[];
   }
 
-  findAll() {
-    return this.contactModel.findAll();
+  async findAll(limit: number, offset: number) {
+    const contacts = await this.contactModel.findAll({
+      limit: limit,
+      offset: offset,
+    });
+
+    return SequelizeHelper.toJSONList(contacts) as IResponseContact[];
   }
 
-  findById(id: string) {
-    return this.contactModel.findOne({ where: { id } });
+  async findById(id: string) {
+    const contact = await this.contactModel.findOne({ where: { id: +id } });
+    if (!contact) throw new Error('Contact not found');
+    return contact?.toJSON() as IResponseContact;
   }
 
   async update(id: string, updates: any) {
     const contact = await this.findById(id);
     if (!contact) throw new Error('Contact not found');
-    await contact.update(updates);
-    return contact;
+    await this.contactModel.update(updates, {
+      where: { id: +id },
+    });
+    const updatedContact = await this.findById(id);
+    return updatedContact;
   }
 
   async delete(id: string) {
     const contact = await this.findById(id);
     if (!contact) throw new Error('Contact not found');
-    await contact.destroy();
+    await this.contactModel.destroy({ where: { id: +id } });
     return true;
   }
 }

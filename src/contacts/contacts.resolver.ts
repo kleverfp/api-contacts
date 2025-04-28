@@ -6,6 +6,7 @@ import { ContactService } from './contacts.service';
 import { IRequestPayload } from './interfaces/IRequestPayload';
 import { IResponseContact } from './interfaces/IResponseContact';
 import { InputContact } from './input.contact.type';
+import { UpdateContact } from './update.contact.type';
 
 @Resolver()
 export class ContactsResolver {
@@ -25,9 +26,13 @@ export class ContactsResolver {
 
   @UseGuards(GqlAuthGuard)
   @Query(() => [Contact])
-  async getContacts(@Context() context: IRequestPayload) {
-    const { storage_type } = context.req.user;
-    return this.contactService.findAll(storage_type);
+  async getContacts(
+    @Args('limit', { type: () => Number, defaultValue: 10 }) limit: number,
+    @Args('offset', { type: () => Number, defaultValue: 0 }) offset: number,
+    @Context() context: IRequestPayload,
+  ) {
+    const { storage_type } = context.req.user.toJSON();
+    return this.contactService.findAll(storage_type, limit, offset);
   }
 
   @UseGuards(GqlAuthGuard)
@@ -36,7 +41,7 @@ export class ContactsResolver {
     @Args('id') id: string,
     @Context() context: IRequestPayload,
   ) {
-    const { storage_type } = context.req.user;
+    const { storage_type } = context.req.user.toJSON();
     return this.contactService.findById(id, storage_type);
   }
 
@@ -44,12 +49,13 @@ export class ContactsResolver {
   @Mutation(() => Contact)
   async updateContact(
     @Args('id') id: string,
-    @Args('name', { nullable: true }) name: string,
-    @Args('phone', { nullable: true }) phone: string,
+    @Args({ name: 'input', type: () => UpdateContact })
+    input: UpdateContact,
     @Context() context: IRequestPayload,
   ) {
-    const { storage_type } = context.req.user;
-    const updates = { name, phone };
+    const { phone, name } = input;
+    const updates = { phone, name };
+    const { storage_type } = context.req.user.toJSON();
     return this.contactService.update(id, storage_type, updates);
   }
 
@@ -59,7 +65,7 @@ export class ContactsResolver {
     @Args('id') id: string,
     @Context() context: IRequestPayload,
   ) {
-    const { storage_type } = context.req.user;
+    const { storage_type } = context.req.user.toJSON();
     return this.contactService.delete(id, storage_type);
   }
 }

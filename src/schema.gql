@@ -13,13 +13,13 @@ type LoginResponse {
 }
 
 type Query {
-  getContacts: [Contact!]!
+  getContacts(limit: Float! = 10, offset: Float! = 0): [Contact!]!
   getContactById(id: String!): Contact!
 }
 
 type Mutation {
   createContacts(input: [InputContact!]!): [Contact!]!
-  updateContact(id: String!, name: String, phone: String): Contact!
+  updateContact(id: String!, input: UpdateContact!): Contact!
   deleteContact(id: String!): Boolean!
   login(x_auth_token: String!): LoginResponse!
 }
@@ -27,4 +27,9 @@ type Mutation {
 input InputContact {
   name: String!
   phone: String!
+}
+
+input UpdateContact {
+  name: String
+  phone: String
 }
