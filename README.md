@@ -17,7 +17,7 @@ Antes de começar, certifique-se de ter o seguinte instalado em sua máquina:
 
     ```bash
     git clone https://github.com/kleverfp/api-contacts.git
-    cd [nome do seu projeto]
+    cd api-contacts
     ```
 
 2.  Instale as dependências:
